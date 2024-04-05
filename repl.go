@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func StartRepl() {
@@ -11,9 +12,14 @@ func StartRepl() {
 	for {
 		fmt.Print("Type your command : ")
 		scanner.Scan()
-		words := scanner.Text()
 
-		command, exists := getCommands()[words]
+		words := cleanInput(scanner.Text())
+		if len(words) == 0 {
+			continue
+		}
+
+		commandName := words[0]
+		command, exists := getCommands()[commandName]
 		if exists {
 			err := command.callback()
 			if err != nil {
@@ -26,6 +32,12 @@ func StartRepl() {
 		}
 
 	}
+}
+
+func cleanInput(text string) []string {
+	output := strings.ToLower(text)
+	words := strings.Fields(output)
+	return words
 }
 
 type cliCommand struct {

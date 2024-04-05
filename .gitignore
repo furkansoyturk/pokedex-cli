@@ -1,3 +1,6 @@
+# darwin binaries
+pokedex-cli
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
