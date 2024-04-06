@@ -1,7 +1,9 @@
 package main
 
-import _ "github.com/furkansoyturk/pokedex-cli/internal/pokeapi"
+import (
+	"github.com/furkansoyturk/pokedex-cli/internal/pokeapi"
+)
 func main() {
-	GetLocationArea()
+	pokeapi.GetLocationArea()
 	StartRepl()
 }
