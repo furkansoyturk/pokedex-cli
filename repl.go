@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func StartRepl() {
+func StartRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Type your command : ")
@@ -21,7 +21,7 @@ func StartRepl() {
 		commandName := words[0]
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -30,7 +30,6 @@ func StartRepl() {
 			fmt.Println("Command not available")
 
 		}
-
 	}
 }
 
@@ -43,7 +42,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -62,6 +61,11 @@ func getCommands() map[string]cliCommand {
 			name:        "map",
 			description: "Show next 20 Pokeman locations",
 			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Show previous 20 Pokeman locations",
+			callback:    commandMapB,
 		},
 	}
 }

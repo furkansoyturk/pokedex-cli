@@ -8,14 +8,20 @@ import (
 	"net/http"
 )
 
-func GetLocationArea() LocationStruct {
+func GetLocationArea(url *string) LocationStruct {
+	requestUrl := "https://pokeapi.co/api/v2/location-area/"
 
-	res, err := http.Get("https://pokeapi.co/api/v2/location-area/")
+	if url != nil {
+		requestUrl = *url
+	}
+
+	res, err := http.Get(requestUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
+	defer res.Body.Close()
+
 	if res.StatusCode > 299 {
 		log.Fatalf("Response failed with status code: %d and\nbody: %s\n", res.StatusCode, body)
 	}

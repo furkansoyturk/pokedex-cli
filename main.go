@@ -1,5 +1,11 @@
 package main
 
+type config struct {
+	nextLocURL *string
+	prevLocURL *string
+}
+
 func main() {
-	StartRepl()
+	cfg := config{}
+	StartRepl(&cfg)
 }
