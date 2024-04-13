@@ -7,7 +7,14 @@ import (
 	"strings"
 )
 
-func StartRepl(cfg *config) {
+type config struct {
+	nextLocURL *string
+	prevLocURL *string
+}
+
+func StartRepl() {
+	cfg := config{}
+	
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Type your command : ")
@@ -21,7 +28,7 @@ func StartRepl(cfg *config) {
 		commandName := words[0]
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback(cfg)
+			err := command.callback(&cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
