@@ -3,18 +3,23 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/furkansoyturk/pokedex-cli/internal/pokeapi"
 	"os"
 	"strings"
+	"time"
 )
 
 type config struct {
 	nextLocURL *string
 	prevLocURL *string
+	pokeClient pokeapi.Client
 }
 
 func StartRepl() {
-	cfg := config{}
-	
+
+	pokeClient := pokeapi.NewClient(5*time.Second, time.Minute*5)
+	cfg := &config{pokeClient: pokeClient}
+
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Type your command : ")
