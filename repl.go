@@ -6,7 +6,6 @@ import (
 	"github.com/furkansoyturk/pokedex-cli/internal/pokeapi"
 	"os"
 	"strings"
-	"time"
 )
 
 type config struct {
@@ -15,10 +14,7 @@ type config struct {
 	pokeClient pokeapi.Client
 }
 
-func StartRepl() {
-
-	pokeClient := pokeapi.NewClient(5*time.Second, time.Minute*5)
-	cfg := &config{pokeClient: pokeClient}
+func StartRepl(ccc *config) {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -33,7 +29,7 @@ func StartRepl() {
 		commandName := words[0]
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback(&cfg)
+			err := command.callback(ccc)
 			if err != nil {
 				fmt.Println(err)
 			}

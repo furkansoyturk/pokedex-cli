@@ -8,13 +8,15 @@ import (
 	"net/http"
 )
 
-func GetLocationArea(url *string) LocationStruct {
+func (c *Client) GetLocationArea(url *string) LocationStruct {
 	requestUrl := "https://pokeapi.co/api/v2/location-area/"
 
 	if url != nil {
 		requestUrl = *url
 	}
-
+	if val, ok := c.cache.Get(requestUrl); ok {
+		return unmarshallLocation(val)
+	}
 	res, err := http.Get(requestUrl)
 	if err != nil {
 		log.Fatal(err)
@@ -28,6 +30,8 @@ func GetLocationArea(url *string) LocationStruct {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	c.cache.Add(requestUrl, body)
 
 	return unmarshallLocation(body)
 }
