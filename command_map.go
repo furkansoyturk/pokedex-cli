@@ -32,3 +32,6 @@ func commandMapB(cfg *config) error {
 	fmt.Println("")
 	return nil
 }
+func commandExplore(cfg *config) error {
+	return nil
+}
