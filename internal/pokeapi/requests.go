@@ -33,10 +33,10 @@ func (c *Client) GetLocationArea(url *string) LocationStruct {
 
 	c.cache.Add(requestUrl, body)
 
-	return unmarshallLocation(body)
+	return unmarshallResponse[LocationStruct](body)
 }
 
-func (c *Client) ExplorePokemons(name string) {
+func (c *Client) ExplorePokemons(name string) PokemonStruct {
 	requestUrl := "https://pokeapi.co/api/v2/location-area/"
 
 	res, err := http.Get(requestUrl)
@@ -57,18 +57,14 @@ func (c *Client) ExplorePokemons(name string) {
 	}
 
 	c.cache.Add(requestUrl, body)
-
-	return unmarshallLocation(body)
+	return unmarshallResponse[PokemonStruct](body)
 }
 
-func unmarshallLocation(body []byte) LocationStruct {
-	locationStruct := LocationStruct{}
-
-	err := json.Unmarshal(body, &locationStruct)
-
+func unmarshallResponse[T LocationStruct | PokemonStruct](body []byte) T {
+	var response T
+	err := json.Unmarshal(body, &response)
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	return locationStruct
+	return response
 }
