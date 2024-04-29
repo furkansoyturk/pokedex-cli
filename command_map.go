@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, args ...string) error {
 	response := cfg.pokeClient.GetLocationArea(cfg.nextLocURL)
 	cfg.nextLocURL = response.Next
 	cfg.prevLocURL = response.Previous
@@ -17,7 +17,7 @@ func commandMap(cfg *config) error {
 	return nil
 }
 
-func commandMapB(cfg *config) error {
+func commandMapB(cfg *config, args ...string) error {
 	if cfg.prevLocURL == nil {
 		return errors.New("No previous location !!!")
 	}
@@ -32,6 +32,13 @@ func commandMapB(cfg *config) error {
 	fmt.Println("")
 	return nil
 }
-func commandExplore(cfg *config) error {
+func commandExplore(cfg *config, args ...string) error {
+	name := args[0]
+	response := cfg.pokeClient.ExplorePokemons(name)
+	fmt.Println("Following pokemons found:")
+	for _, pokemons := range response.PokemonEncounters {
+		fmt.Printf("%s\n", pokemons.Pokemon.Name)
+	}
+	fmt.Println("")
 	return nil
 }
