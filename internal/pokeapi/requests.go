@@ -38,6 +38,11 @@ func (c *Client) GetLocationArea(url *string) LocationStruct {
 
 func (c *Client) ExplorePokemons(name string) PokemonStruct {
 	requestUrl := fmt.Sprintf("https://pokeapi.co/api/v2/location-area/%s", name)
+
+	if val, ok := c.cache.Get(requestUrl); ok {
+		return unmarshallResponse[PokemonStruct](val)
+	}
+
 	res, err := http.Get(requestUrl)
 	if err != nil {
 		log.Fatal(err)
