@@ -1,2 +1,2 @@
 # pokedex-cli
-pokedex-cli-go
+example go project that consumes https://pokeapi.co/ from command line
