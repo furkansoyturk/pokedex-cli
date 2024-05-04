@@ -6,5 +6,7 @@ type PokemonStruct struct {
 			Name string `json:"name"`
 		} `json:"pokemon"`
 	} `json:"pokemon_encounters"`
-	BaseExperience int `json:"base_experience"`
+	BaseExperience int    `json:"base_experience"`
+	Name           string `json:"name"`
+	Height         int    `json:"height"`
 }

@@ -14,10 +14,10 @@ func commandCatch(cfg *config, args ...string) error {
 	fmt.Printf("\n math random : %v", random)
 	if random > 50 {
 		fmt.Printf("\n %s was caught", name)
+		cfg.caughtPokeman[response.Name] = response
 	} else {
 		fmt.Printf("\n %s escaped", name)
 	}
-
 	fmt.Println("")
 	return nil
 }

@@ -9,9 +9,10 @@ import (
 )
 
 type config struct {
-	nextLocURL *string
-	prevLocURL *string
-	pokeClient pokeapi.Client
+	nextLocURL    *string
+	prevLocURL    *string
+	pokeClient    pokeapi.Client
+	caughtPokeman map[string]pokeapi.PokemonStruct
 }
 
 func StartRepl(cfg *config) {
@@ -88,6 +89,16 @@ func getCommands() map[string]cliCommand {
 			name:        "catch <pokemon_name>",
 			description: "Catch pokemons with name",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon_name>",
+			description: "Inspect pokemons with name",
+			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Show Pokedex",
+			callback:    commandPokedex,
 		},
 	}
 }
