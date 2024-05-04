@@ -64,7 +64,7 @@ func (c *Client) ExplorePokemons(name string) PokemonStruct {
 	return unmarshallResponse[PokemonStruct](body)
 }
 func (c *Client) CatchPokemons(name string) PokemonStruct {
-	requestUrl := fmt.Sprintf("https://pokeapi.co/api/v2/location-area/%s", name)
+	requestUrl := fmt.Sprintf("https://pokeapi.co/api/v2/pokemon/%s", name)
 
 	if val, ok := c.cache.Get(requestUrl); ok {
 		return unmarshallResponse[PokemonStruct](val)
